@@ -82,7 +82,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
-        if (scores[activePlayer] >= 20) {
+        if (scores[activePlayer] >= 100) {
             NewGame = false;
             document.getElementById('name-' + activePlayer).textContent = 'ЯЛАГЧ!!!';
         } else {
@@ -95,3 +95,7 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
 // new game event
 document.querySelector('.btn-new').addEventListener('click', resetGame);
+
+document.querySelector('.toggle').addEventListener('click', function () {
+    document.querySelector('.description').classList.toggle('change')
+})
