@@ -120,6 +120,7 @@ button {
     cursor: pointer;
     font-weight: 300;
     transition: background-color 0.3s, color 0.3s;
+    transition: .3s linear;
 }
 
 button:hover i { margin-right: 20px; }

@@ -8,11 +8,14 @@ var scores;
 
 var roundScore;
 
+var NewGame;
 // shoonii zurag heseg
 
 var diceDom = document.querySelector('.dice');
 
 function resetGame() {
+    NewGame = true;
+
     activePlayer = 0;
 
     scores = [0, 0];
@@ -50,35 +53,43 @@ function switchToNextPlayer() {
 
 // shoog shideh event
 document.querySelector('.btn-roll').addEventListener('click', function () {
-    // shoonii ali talaaraa buusan eseh
-    var diceNumber = Math.floor(Math.random() * 6) + 1;
+    if (NewGame === true) {
+        // shoonii ali talaaraa buusan eseh
+        var diceNumber = Math.floor(Math.random() * 6) + 1;
 
-    // shoonii zurag heseg
-    diceDom.style.display = "block";
-    diceDom.src = 'dice-' + diceNumber + '.png';
+        // shoonii zurag heseg
+        diceDom.style.display = "block";
+        diceDom.src = 'dice-' + diceNumber + '.png';
 
-    // toglogchiin eeljiin onoog gargah
-    if (diceNumber !== 1) {
-        roundScore = roundScore + diceNumber
-        document.getElementById('current-' + activePlayer).textContent = roundScore;
+        // toglogchiin eeljiin onoog gargah
+        if (diceNumber !== 1) {
+            roundScore = roundScore + diceNumber
+            document.getElementById('current-' + activePlayer).textContent = roundScore;
+        } else {
+            scores[activePlayer] = roundScore = 0;
+            document.getElementById('score-' + activePlayer).textContent = 0;
+            switchToNextPlayer()
+        }
     } else {
-        scores[activePlayer] = roundScore = 0;
-        document.getElementById('score-' + activePlayer).textContent = 0;
-        switchToNextPlayer()
+        alert('Тоглоом дууссан байна.. "Шинээр эхлэх" товчийг дарж дахин эхлүүлнэ үү!!!')
     }
 });
 
 // hold tovchnii event
 document.querySelector('.btn-hold').addEventListener('click', function () {
+    if (NewGame === true) {
+        scores[activePlayer] = scores[activePlayer] + roundScore;
 
-    scores[activePlayer] = scores[activePlayer] + roundScore;
+        document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
-    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
-
-    if (scores[activePlayer] >= 20) {
-        document.getElementById('name-' + activePlayer).textContent = 'WINNER!!!';
+        if (scores[activePlayer] >= 20) {
+            NewGame = false;
+            document.getElementById('name-' + activePlayer).textContent = 'ЯЛАГЧ!!!';
+        } else {
+            switchToNextPlayer()
+        }
     } else {
-        switchToNextPlayer()
+        alert('Тоглоом дууссан байна.. "Шинээр эхлэх" товчийг дарж дахин эхлүүлнэ үү!!!')
     }
 });
 
