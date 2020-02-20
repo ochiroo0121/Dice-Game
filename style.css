@@ -70,7 +70,10 @@ body {
     margin-bottom: 130px;
 }
 
-.active { background-color: #f7f7f7; }
+.active { 
+    background-color: #f7f7f7; 
+}
+
 .active .player-name { 
     font-weight: 300;
     color: #EB4D4D;
@@ -83,7 +86,6 @@ body {
     color: #EB4D4D;
     top: -7px;
     right: 10px;
-    
 }
 
 .player-current-box {
@@ -120,7 +122,6 @@ button {
     cursor: pointer;
     font-weight: 300;
     transition: background-color 0.3s, color 0.3s;
-    transition: .3s linear;
 }
 
 button:hover i { margin-right: 20px; }
