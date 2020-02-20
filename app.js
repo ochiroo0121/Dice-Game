@@ -1,27 +1,44 @@
-//  toglogchiin eelj
-var activePlayer = 0;
+var activePlayer;
 
 // toglogchiin tugluulsan onoo
 
-var scores = [0, 0];
+var scores;
 
 // toglogchiin eeljiin onoo
 
-var roundScore = 0;
-
-// togloomiin beltgel
-
-document.getElementById('score-0').textContent = 0;
-document.getElementById('score-1').textContent = 0;
-
-
-document.getElementById('current-0').textContent = 0;
-document.getElementById('current-1').textContent = 0;
+var roundScore;
 
 // shoonii zurag heseg
 
 var diceDom = document.querySelector('.dice');
-diceDom.style.display = "none";
+
+function resetGame() {
+    activePlayer = 0;
+
+    scores = [0, 0];
+
+    roundScore = 0;
+
+    // togloomiin beltgel
+
+    document.getElementById('score-0').textContent = 0;
+    document.getElementById('score-1').textContent = 0;
+
+    document.getElementById('current-0').textContent = 0;
+    document.getElementById('current-1').textContent = 0;
+
+    document.querySelector('.player-0-panel').classList.remove('active')
+    document.querySelector('.player-1-panel').classList.remove('active')
+
+    document.querySelector('.player-0-panel').classList.add('active')
+
+    document.getElementById('name-0').textContent = 'ТОГЛОГЧ 1'
+    document.getElementById('name-1').textContent = 'ТОГЛОГЧ 2'
+
+    diceDom.style.display = "none";
+};
+
+resetGame();
 
 function switchToNextPlayer() {
     roundScore = 0;
@@ -45,6 +62,8 @@ document.querySelector('.btn-roll').addEventListener('click', function () {
         roundScore = roundScore + diceNumber
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     } else {
+        scores[activePlayer] = roundScore = 0;
+        document.getElementById('score-' + activePlayer).textContent = 0;
         switchToNextPlayer()
     }
 });
@@ -54,19 +73,14 @@ document.querySelector('.btn-hold').addEventListener('click', function () {
 
     scores[activePlayer] = scores[activePlayer] + roundScore;
 
+    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+
     if (scores[activePlayer] >= 20) {
         document.getElementById('name-' + activePlayer).textContent = 'WINNER!!!';
     } else {
-        switchToNextPlayer();
+        switchToNextPlayer()
     }
-
-    document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
-
-
-    switchToNextPlayer()
 });
 
 // new game event
-// document.querySelector('.btn-new').addEventListener('click', function(){
-
-// })
+document.querySelector('.btn-new').addEventListener('click', resetGame);
