@@ -71,7 +71,10 @@ body {
 }
 
 .active { background-color: #f7f7f7; }
-.active .player-name { font-weight: 300; }
+.active .player-name { 
+    font-weight: 300;
+    color: #EB4D4D;
+ }
 
 .active .player-name::after {
     content: "\2022";
