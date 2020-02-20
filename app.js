@@ -10,16 +10,25 @@ var scores = [0, 0];
 
 var roundScore = 0;
 
-// shoonii ali talaaraa buusan eseh
-
-var dice = Math.floor(Math.random() * 6) + 1;
-
 // togloomiin beltgel
+
 document.getElementById('score-0').textContent = 0;
 document.getElementById('score-1').textContent = 0;
+
 
 document.getElementById('current-0').textContent = 0;
 document.getElementById('current-1').textContent = 0;
 
-document.querySelector('.dice').style.display = "none";
+var diceDom = document.querySelector('.dice');
 
+diceDom.style.display = "none";
+
+// shoonii event
+document.querySelector('.btn-roll').addEventListener('click', function () {
+    // shoonii ali talaaraa buusan eseh
+    var diceNumber = Math.floor(Math.random() * 6) + 1;
+
+    // shoonii zurag heseg
+    diceDom.style.display = "block";
+    diceDom.src = 'dice-' + diceNumber + '.png';
+});
