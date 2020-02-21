@@ -173,7 +173,7 @@ i {
 }
 .description .toggle {
     position: relative;
-    width: 80px;
+    width: 120px;
     height: 50px;
     background: #EB4D4D;
     position: absolute;
@@ -183,12 +183,21 @@ i {
     cursor: pointer;
 }
 
+.description .toggle h6 {
+    position: absolute;
+    top: 16px;
+    left: 45%;
+    color: #fff;
+    animation: arrow 3s linear infinite;
+    font-size: 16px;
+}
 .description .toggle i {
     position: absolute;
-    top: 8px;
-    left: 40%;
+    top: 14px;
+    left: 10%;
     color: #fff;
-    animation: arrow 1.5s linear infinite;
+    animation: arrowI 3s linear infinite;
+    font-size: 25px;
 }
 
 @keyframes arrow {
@@ -202,10 +211,30 @@ i {
         transform: translateY(10px);
     }
 }
+@keyframes arrowI {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 
 .description .title {
+    position: relative;
     color: #fff;
     background: #EB4D4D;
+    width: 100%;
+    padding: 15px;
+}
+.description .title i {
+    position: absolute;
+    top: 15%;
+    left: -20%;
+    color: #fff;
     width: 100%;
     padding: 15px;
 }
@@ -222,7 +251,7 @@ i {
 }
 
 .description .section p {
-    margin: 25px 0;
+    margin: 5px 0 35px 0;
 }
 
 .change {
