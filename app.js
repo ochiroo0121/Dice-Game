@@ -1,101 +1,146 @@
-var activePlayer;
+const player = document.querySelectorAll(".player-score");
+const current = document.querySelectorAll(".player-current-score");
 
-// toglogchiin tugluulsan onoo
+const playerName = document.querySelectorAll(".player-name");
 
-var scores;
+const diceRotate = document.querySelector(".btn-roll");
+const diceHold = document.querySelector(".btn-hold");
+const btnNew = document.querySelector(".btn-new");
 
-// toglogchiin eeljiin onoo
+const diceImg = document.querySelector(".dice");
+const input = document.querySelector(".input");
+const dar = document.querySelector(".dar");
 
-var roundScore;
+const toggle = document.querySelector(".toggle");
 
-var NewGame;
-// shoonii zurag heseg
+var activePlayer = 0;
 
-var diceDom = document.querySelector('.dice');
+var playerScore = 0;
 
-function resetGame() {
-    NewGame = true;
+var roundScore = [0, 0];
 
+var roadToWin;
+
+var gameOver;
+
+total = 100;
+
+// Togloom ehleh heseg
+function newGame() {
+  gameOver = false;
+  activePlayer = 0;
+
+  playerScore = 0;
+
+  roundScore = [0, 0];
+
+  player[0].textContent = "0";
+  player[1].textContent = "0";
+
+  current[0].textContent = "0";
+  current[1].textContent = "0";
+
+  diceImg.style.display = "none";
+  playerName[0].textContent = "Тоглогч 1";
+  playerName[1].textContent = "Тоглогч 2";
+  input.value = 100;
+  total = 100;
+  document.querySelector(".totalNumb").textContent = total;
+}
+newGame();
+
+dar.addEventListener("click", function () {
+  if (gameOver !== true) {
+    total = input.value;
+    document.querySelector(".totalNumb").textContent = total;
+
+    playerScore = 0;
+    player[0].textContent = "0";
+    player[1].textContent = "0";
+
+    current[0].textContent = "0";
+    current[1].textContent = "0";
+
+    diceImg.style.display = "none";
+  } else {
+    alert(
+      "Тоглогч " +
+        (activePlayer + 1) +
+        " хожсон байна. Тоглоомийг шинээр эхлүүлнэ үү!!!"
+    );
+  }
+});
+
+function whoActive() {
+  for (let i = 0; i < playerName.length; i++) {
+    playerName[i].parentElement.classList.remove("active");
+  }
+
+  if (activePlayer === 0) {
+    activePlayer = 1;
+    playerName[activePlayer].parentElement.classList.add("active");
+  } else {
     activePlayer = 0;
-
-    scores = [0, 0];
-
-    roundScore = 0;
-
-    // togloomiin beltgel
-
-    document.getElementById('score-0').textContent = 0;
-    document.getElementById('score-1').textContent = 0;
-
-    document.getElementById('current-0').textContent = 0;
-    document.getElementById('current-1').textContent = 0;
-
-    document.querySelector('.player-0-panel').classList.remove('active')
-    document.querySelector('.player-1-panel').classList.remove('active')
-
-    document.querySelector('.player-0-panel').classList.add('active')
-
-    document.getElementById('name-0').textContent = 'ТОГЛОГЧ 1'
-    document.getElementById('name-1').textContent = 'ТОГЛОГЧ 2'
-
-    diceDom.style.display = "none";
-};
-
-resetGame();
-
-function switchToNextPlayer() {
-    roundScore = 0;
-    document.getElementById('current-' + activePlayer).textContent = 0;
-    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
-    document.querySelector('.player-0-panel').classList.toggle('active')
-    document.querySelector('.player-1-panel').classList.toggle('active')
+    playerName[activePlayer].parentElement.classList.add("active");
+  }
 }
 
-// shoog shideh event
-document.querySelector('.btn-roll').addEventListener('click', function () {
-    if (NewGame === true) {
-        // shoonii ali talaaraa buusan eseh
-        var diceNumber = Math.floor(Math.random() * 6) + 1;
+diceHold.addEventListener("click", function () {
+  player[activePlayer].textContent = roundScore[activePlayer];
+  roundScore[activePlayer] = playerScore + roundScore[activePlayer];
 
-        // shoonii zurag heseg
-        diceDom.style.display = "block";
-        diceDom.src = 'dice-' + diceNumber + '.png';
-
-        // toglogchiin eeljiin onoog gargah
-        if (diceNumber !== 1) {
-            roundScore = roundScore + diceNumber
-            document.getElementById('current-' + activePlayer).textContent = roundScore;
-        } else {
-            scores[activePlayer] = roundScore = 0;
-            document.getElementById('score-' + activePlayer).textContent = 0;
-            switchToNextPlayer()
-        }
-    } else {
-        alert('Тоглоом дууссан байна.. "Шинээр эхлэх" товчийг дарж дахин эхлүүлнэ үү!!!')
+  if (roundScore[activePlayer] < total) {
+    current[activePlayer].textContent = roundScore[activePlayer];
+    whoActive();
+  } else {
+    for (let i = 0; i < playerName.length; i++) {
+      playerName[i].parentElement.classList.remove("active");
     }
+    playerName[activePlayer].parentElement.classList.add("winner");
+    playerName[activePlayer].textContent = "WINNER";
+    current[activePlayer].textContent = roundScore[activePlayer];
+    gameOver = true;
+  }
+  player[activePlayer].textContent = "0";
+  playerScore = 0;
 });
 
-// hold tovchnii event
-document.querySelector('.btn-hold').addEventListener('click', function () {
-    if (NewGame === true) {
-        scores[activePlayer] = scores[activePlayer] + roundScore;
+diceRotate.addEventListener("click", function () {
+  if (gameOver !== true) {
+    rollDice = Math.floor(Math.random() * 6) + 1;
 
-        document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
+    if (rollDice !== 1) {
+      diceImg.style.display = "block";
+      diceImg.src = "dice-" + rollDice + ".png";
 
-        if (scores[activePlayer] >= 100) {
-            NewGame = false;
-            document.getElementById('name-' + activePlayer).textContent = 'ЯЛАГЧ!!!';
-        } else {
-            switchToNextPlayer()
-        }
+      playerScore = rollDice + playerScore;
+
+      player[activePlayer].textContent = playerScore;
     } else {
-        alert('Тоглоом дууссан байна.. "Шинээр эхлэх" товчийг дарж дахин эхлүүлнэ үү!!!')
+      diceImg.src = "dice-" + rollDice + ".png";
+      playerScore = 0;
+      player[activePlayer].textContent = "0";
+      whoActive();
     }
+  } else {
+    alert(
+      "Тоглогч " +
+        (activePlayer + 1) +
+        " хожсон байна. Тоглоомийг шинээр эхлүүлнэ үү!!!"
+    );
+  }
 });
 
-// new game event
-document.querySelector('.btn-new').addEventListener('click', resetGame);
+btnNew.addEventListener("click", function () {
+  newGame();
+  for (let i = 0; i < playerName.length; i++) {
+    playerName[i].parentElement.classList.remove("active");
+    playerName[i].parentElement.classList.remove("winner");
+  }
+  playerName[activePlayer].parentElement.classList.add("active");
+  playerName[activePlayer].textContent = "Тоглогч " + (activePlayer + 1);
+});
 
-document.querySelector('.toggle').addEventListener('click', function () {
-    document.querySelector('.description').classList.toggle('change')
-})
+toggle.addEventListener("click", function () {
+  document.querySelector(".description").classList.toggle("change");
+});
